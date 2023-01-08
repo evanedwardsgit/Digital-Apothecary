@@ -4,8 +4,8 @@
 * Copyright 2022, Evan JJ Edwards - GPLv3 or later
 * Contact at eedwards6@wisc.edu with any comments, concerns, or suggestions
 *
-* Bernoulli gate, analog logic, and aesthetic of this module inspired by the Kinka, Links, and Branches modules by Mutable Instruments - 2022
-* Implementation of the bernoulli gates is utilized from the structure of Audible Instument's code (GPLv3) - 2022
+* Bernoulli gate, analog logic, and aesthetic of this module inspired by the Kinka, Links, and Branches modules by Mutable Instruments - since 2022
+* Implementation of the bernoulli gates is utilized from the structure of Audible Instument's code (GPLv3) - since 2022
 *
 * My anthem while making this module - That I Miss You - Vansire
 */
@@ -61,7 +61,7 @@ struct Linden : Module {
 };
 
 void Linden::process(const ProcessArgs &args){
-	//Analog logic
+	//Analog "logic"
 	outputs[MAX_OUTPUT].setVoltage(inputs[ANALOG_A_INPUT].getVoltage() >  inputs[ANALOG_B_INPUT].getVoltage() ? inputs[ANALOG_A_INPUT].getVoltage() :  inputs[ANALOG_B_INPUT].getVoltage());
 	outputs[MIN_OUTPUT].setVoltage(inputs[ANALOG_A_INPUT].getVoltage() <  inputs[ANALOG_B_INPUT].getVoltage() ? inputs[ANALOG_A_INPUT].getVoltage() :  inputs[ANALOG_B_INPUT].getVoltage());	
 	
@@ -78,7 +78,7 @@ void Linden::process(const ProcessArgs &args){
 		outputs[B_BERN_OUTPUT].setVoltage(outcome ? 10.f : 0.f);
 	}
 
-	//Toffoli
+	//CNOT
 
 	bool bitA = inputs[A_CNOT_INPUT].getVoltage() >= 2.f;
 	bool bitB = inputs[B_CNOT_INPUT].getVoltage() >= 2.f;
