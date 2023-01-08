@@ -18,6 +18,7 @@ An oscillator that adds harmonically related sine waves to create a more complex
 
 ## Linden - Gates
 
+![](https://github.com/evanedwardsgit/Digital-Apothecary/blob/main/res/Panels/Linden.svg)
 
 A module containing some unconventional analog and digital logic gates
 
