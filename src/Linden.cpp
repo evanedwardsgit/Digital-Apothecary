@@ -22,8 +22,8 @@ struct Linden : Module {
 		ANALOG_B_INPUT,
 		BERNOULLI_INPUT,
 		PROB_INPUT,
-		A_REV_INPUT,
-		B_REV_INPUT,
+		A_CNOT_INPUT,
+		B_CNOT_INPUT,
 		INPUTS_LEN
 	};
 	enum OutputId {
@@ -31,8 +31,8 @@ struct Linden : Module {
 		MIN_OUTPUT,
 		A_BERN_OUTPUT,
 		B_BERN_OUTPUT,
-		A_REV_OUTPUT,
-		B_REV_OUTPUT,
+		A_CNOT_OUTPUT,
+		B_CNOT_OUTPUT,
 		OUTPUTS_LEN
 	};
 	enum LightId {
@@ -47,14 +47,14 @@ struct Linden : Module {
 		configInput(ANALOG_B_INPUT, "");
 		configInput(BERNOULLI_INPUT, "");
 		configInput(PROB_INPUT, "");
-		configInput(A_REV_INPUT, "");
-		configInput(B_REV_INPUT, "");
+		configInput(A_CNOT_INPUT, "");
+		configInput(B_CNOT_INPUT, "");
 		configOutput(MAX_OUTPUT, "");
 		configOutput(MIN_OUTPUT, "");
 		configOutput(A_BERN_OUTPUT, "");
 		configOutput(B_BERN_OUTPUT, "");
-		configOutput(A_REV_OUTPUT, "");
-		configOutput(B_REV_OUTPUT, "");
+		configOutput(A_CNOT_OUTPUT, "");
+		configOutput(B_CNOT_OUTPUT, "");
 	}
 
 	void process(const ProcessArgs &args) override;
@@ -80,8 +80,8 @@ void Linden::process(const ProcessArgs &args){
 
 	//Toffoli
 
-	bool bitA = inputs[A_REV_INPUT].getVoltage() >= 2.f;
-	bool bitB = inputs[B_REV_INPUT].getVoltage() >= 2.f;
+	bool bitA = inputs[A_CNOT_INPUT].getVoltage() >= 2.f;
+	bool bitB = inputs[B_CNOT_INPUT].getVoltage() >= 2.f;
 	bool outA, outB;
 
 	if(!bitA && !bitB){
@@ -98,8 +98,8 @@ void Linden::process(const ProcessArgs &args){
 		outB = false;
 	}
 
-	outputs[A_REV_OUTPUT].setVoltage(outA ? 10.f : 0.f);
-	outputs[B_REV_OUTPUT].setVoltage(outB ? 10.f : 0.f);
+	outputs[A_CNOT_OUTPUT].setVoltage(outA ? 10.f : 0.f);
+	outputs[B_CNOT_OUTPUT].setVoltage(outB ? 10.f : 0.f);
 	
 }
 
@@ -117,15 +117,15 @@ struct LindenWidget : ModuleWidget {
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(14.365, 26.18402)), module, Linden::ANALOG_B_INPUT));
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(5.955, 62.11351)), module, Linden::BERNOULLI_INPUT));
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(14.365, 62.11351)), module, Linden::PROB_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(5.955, 98.04299)), module, Linden::A_REV_INPUT));
-		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(14.365, 98.04299)), module, Linden::B_REV_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(5.955, 98.04299)), module, Linden::A_CNOT_INPUT));
+		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(14.365, 98.04299)), module, Linden::B_CNOT_INPUT));
 
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(5.955, 38.92401)), module, Linden::MAX_OUTPUT));
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(14.365, 38.92401)), module, Linden::MIN_OUTPUT));
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(5.955, 74.96958)), module, Linden::A_BERN_OUTPUT));
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(14.365, 74.96958)), module, Linden::B_BERN_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(5.955, 110.78298)), module, Linden::A_REV_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(14.365, 110.78298)), module, Linden::B_REV_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(5.955, 110.78298)), module, Linden::A_CNOT_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(14.365, 110.78298)), module, Linden::B_CNOT_OUTPUT));
 	}
 };
 
