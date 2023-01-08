@@ -1,7 +1,7 @@
 /*
 * Rue v1.0.0 - Stable Release
 * A voltage controlled amplifier with an adjustable response curve and control voltage offset
-* Copyright 2022, Evan JJ Edwards - GPLv3 or later
+* Copyright 2023, Evan JJ Edwards - GPLv3 or later
 * Contact at eedwards6@wisc.edu with any comments, concerns, or suggestions
 *
 * My anthem while making this module - Run for Cover by The Killers
@@ -48,7 +48,7 @@ struct Rue : Module {
 void Rue::process(const ProcessArgs &args){
 	int activeChannels = std::max(1, inputs[SIGNAL_INPUT].getChannels());
 	float gain = std::pow(params[GAIN_PARAM].getValue(), params[CURVE_PARAM].getValue());
-	simd::float_4 signals[4]; //Is using single instruction, multiple data necessary? nope. Does it make me feel cooler? yep.
+	float_4 signals[4]; //Is using single instruction, multiple data necessary? nope. Does it make me feel cooler? yep.
 
 	lights[SIG_LIGHT].setBrightness(gain);
 
@@ -65,7 +65,7 @@ void Rue::process(const ProcessArgs &args){
 		signals[chan / 4] *= amp;
 
 		if(outputs[VCA_OUTPUT].isConnected())
-			outputs[VCA_OUTPUT].setVoltageSimd(simd::clamp(signals[chan / 4], -10.f, 10.f), chan); //TODO: Rework so it's not straight up clipping - tanh?
+			outputs[VCA_OUTPUT].setVoltageSimd(simd::clamp(signals[chan / 4], -10.f, 10.f), chan); //TODO: Rework so it's not straight up clipping - tanh maybe?
 	}
 
 	outputs[VCA_OUTPUT].setChannels(activeChannels);

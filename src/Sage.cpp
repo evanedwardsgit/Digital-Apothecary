@@ -4,7 +4,7 @@
 * Copyright 2022, Evan JJ Edwards - GPLv3 or later
 * Contact at eedwards6@wisc.edu with any comments, concerns, or suggestions
 * 
-* Pitch calculations and polyphonic structure utilized from Andrew Belt's code (GPLv3) - 2022
+* Pitch calculations and polyphonic structure utilized from Andrew Belt's code (GPLv3) - since 2022
 *
 * My anthem while making this module - Be Fine by Madeon
 */
@@ -43,11 +43,6 @@ struct HarmonicOsc{
 
 	private:
 		T summation(T phase){
-			// No need to iterate if amplitudes are zero, saves resources - especially with many polyphonic channels 
-			if(oddsAmp == 0.f && evensAmp == 0.f){
-				return simd::sin(2.f * M_PI * phase);
-			}
-
 			T toReturn = simd::sin(2.f * M_PI * phase);
 			
 			for (int i = 2; i <= 8; i++){
