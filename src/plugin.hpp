@@ -8,3 +8,4 @@ extern Plugin* pluginInstance;
 
 extern Model* modelSage;
 extern Model* modelLinden;
+extern Model* modelRue;

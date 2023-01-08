@@ -4,7 +4,6 @@
 * Email eedwards6@wisc.edu with any comments, concerns, or suggestions
 * 
 * I would like to reiterate the intellectual properties utilized in the graphics that are referenced here
-* Rogan5PSGray, Rogan5PSGray_fg adapted into R-Style5PSWhite, R-Style5PSWhite_fg respectively
 * Rogan1PSRed, Rogan1PSRed_fg adapted into R-Style1PPink, R-Style1PPink_fg respectively
 * All of the above is under Component Library graphics - © 2016-2021 VCV - CC BY-NC 4.0
 *
@@ -17,6 +16,9 @@
 #include <rack.hpp>
 #include <asset.hpp>
 
+//d35854ff
+static const NVGcolor SCHEME_PINK = nvgRGB(0xd3, 0x58, 0x54);
+
 namespace rack::componentlibrary{
     using namespace window;
     
@@ -28,4 +30,13 @@ namespace rack::componentlibrary{
             
         }
     };
+
+    template <typename TBase = GrayModuleLightWidget>
+    struct TPinkLight : TBase {
+        TPinkLight() {
+            this->addBaseColor(SCHEME_PINK);
+        }
+    };
+    using PinkLight = TPinkLight<>;
+
 }

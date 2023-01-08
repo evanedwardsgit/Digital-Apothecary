@@ -7,4 +7,5 @@ void init(Plugin *p){
 	
 	p->addModel(modelSage);
 	p->addModel(modelLinden);
+	p->addModel(modelRue);
 }

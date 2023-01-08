@@ -153,8 +153,10 @@ struct SageWidget : ModuleWidget{
 
 		addParam(createParamCentered<Rogan3PWhite>(mm2px(Vec(8.495, 25.28)), module, Sage::ODDS_PARAM));
 		addParam(createParamCentered<Rogan3PWhite>(mm2px(Vec(21.985, 38.77)), module, Sage::EVENS_PARAM));
+		
 		addParam(createParamCentered<RStyle1PPink>(mm2px(Vec(8.495, 54.515)), module, Sage::TUNE_PARAM));
 		addParam(createParamCentered<RStyle1PPink>(mm2px(Vec(21.985, 67.75)), module, Sage::OUT_PARAM));
+
 		addParam(createParamCentered<Trimpot>(mm2px(Vec(8.495, 85.303)), module, Sage::FM_PARAM));
 
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(21.985, 85.303)), module, Sage::FM_INPUT));

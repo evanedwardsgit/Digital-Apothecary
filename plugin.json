@@ -1,7 +1,7 @@
 {
   "slug": "Digital-Apothecary",
   "name": "Digital Apothecary",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "license": "GPL-3.0-or-later",
   "brand": "Digital Apothecary",
   "author": "Evan JJ Edwards",
@@ -27,7 +27,18 @@
       "name": "Linden",
       "description": "A module containing some unconventional analog and digital logic gates.",
       "tags": [
-        "Logic"
+        "Logic",
+        "Random",
+        "Utility"
+      ]
+    },
+    {
+      "slug": "Rue",
+      "name": "Rue",
+      "description": "A voltage controlled amplifier cv offset a variable response curve.",
+      "tags": [
+        "Polyphonic",
+        "Voltage-controlled amplifier"
       ]
     }
   ]
