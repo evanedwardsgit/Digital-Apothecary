@@ -37,6 +37,7 @@ Utilizing code and principles from Audible Instruments' adaption of Branches
 ![](https://github.com/evanedwardsgit/Digital-Apothecary/blob/main/res/Panels/Rue.svg)
 
 A voltage controlled amplifier
-Has offset control over cv
+
+Has offset control for control voltage
 
 Allows for a variable response curve for CV and gain
