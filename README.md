@@ -28,6 +28,8 @@ The analog gate takes in two inputs, and outputs the minimum and maximum values 
 
 The Bernoulli gate routes a gate to an output, according to a probability
 
+The CNOT gate is a logical gate utilized in reversible computing
+
 Inspired by Mutable Instrument's Kinks and Branches modules
 
 Utilizing code and principles from Audible Instruments' adaption of Branches
