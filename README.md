@@ -14,7 +14,9 @@ Please email if you have any inquires on this project
 
 An additive harmonic oscillator
 
-An oscillator that adds harmonically related sine waves to create a more complex waveform, supports polyphony
+An oscillator that adds harmonically related sine waves to create a more complex waveform
+
+Supports polyphony
 
 ## Linden - Gates
 
@@ -41,3 +43,5 @@ A voltage controlled amplifier
 Has offset control for control voltage
 
 Allows for a variable response curve for CV and gain
+
+Supports polyphony
