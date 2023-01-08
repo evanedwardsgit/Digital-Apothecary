@@ -22,7 +22,7 @@ An oscillator that adds harmonically related sine waves to create a more complex
 
 A module containing some unconventional analog and digital logic gates
 
-Contains an assortment of digital, analog, and probability based gates
+Contains an assortment of digital CNOT, analog, and probability based gates
 
 Inspired by Mutable Instrument's Kinks and Branches modules
 
