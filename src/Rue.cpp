@@ -46,9 +46,8 @@ struct Rue : Module {
 };
 
 void Rue::process(const ProcessArgs &args){
-	//Don't mod the values, just display
-	configParam(GAIN_PARAM, 0.0, M_SQRT2, params[GAIN_PARAM].getValue(), "Gain", " dB", -10, 20 * params[CURVE_PARAM].getValue());
-
+	paramQuantities[GAIN_PARAM]->displayMultiplier = 20 * params[CURVE_PARAM].getValue();
+	
 	int activeChannels = std::max(1, inputs[SIGNAL_INPUT].getChannels());
 	float gain = std::pow(params[GAIN_PARAM].getValue(), params[CURVE_PARAM].getValue());
 	float_4 signals[4]; //Is using single instruction, multiple data necessary? nope. Does it make me feel cooler? yep.
