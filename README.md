@@ -12,7 +12,7 @@ Please email if you have any inquires on this project
 
 ![](https://github.com/evanedwardsgit/Digital-Apothecary/blob/main/res/Panels/Sage.svg)
 
-An oscillator that adds harmonically related sine waves to create a more complex and rich waveform and allows for seperate control of odd and even harmonics. This module upports polyphony.
+An oscillator that adds harmonically related sine waves to create a more complex and rich waveform and allows for seperate control of odd and even harmonics. This module supports polyphony.
 
 ## Linden - Gates
 
