@@ -35,9 +35,9 @@ struct Rue : Module {
 	Rue() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 		configParam(CURVE_PARAM, 1.f, 4.f, 1.f, "x To the ", "-th Power");
-		configParam(GAIN_PARAM, 0.0, M_SQRT2, 1.0, "Gain Level", " dB", -10, 40);
+		configParam(GAIN_PARAM, 0.f, 1.f, 1.f, "Gain", " %", 0.f, 100.f);
 		configParam(OFFSET_PARAM, -5.f, 5.f, 0.f, "Offset", " Volts");
-		configInput(SIGNAL_INPUT, "");
+		configInput(SIGNAL_INPUT, ""); 
 		configInput(CV_INPUT, "");
 		configOutput(VCA_OUTPUT, "");
 	}
