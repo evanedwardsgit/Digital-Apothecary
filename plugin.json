@@ -16,7 +16,7 @@
     {
       "slug": "Sage",
       "name": "Sage",
-      "description": "An additive harmonic oscillator",
+      "description": "An oscillator that adds harmonically related sine waves.",
       "tags": [
         "Oscillator",
         "Polyphonic"
