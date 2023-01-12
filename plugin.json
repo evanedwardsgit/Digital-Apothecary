@@ -1,7 +1,7 @@
 {
   "slug": "Digital-Apothecary",
   "name": "Digital Apothecary",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "license": "GPL-3.0-or-later",
   "brand": "Digital Apothecary",
   "author": "Evan JJ Edwards",
@@ -35,7 +35,7 @@
     {
       "slug": "Rue",
       "name": "Rue",
-      "description": "A voltage controlled amplifier with cv offset and a variable response curve.",
+      "description": "A voltage controlled amplifier with CV offset and a variable response curve.",
       "tags": [
         "Polyphonic",
         "Voltage-controlled amplifier"
