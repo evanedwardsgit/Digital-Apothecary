@@ -7,7 +7,7 @@
 * Bernoulli gate, analog logic, and aesthetic of this module inspired by the Kinka, Links, and Branches modules by Mutable Instruments - since 2022
 * Implementation of the bernoulli gates is utilized from the structure of Audible Instument's code (GPLv3) - since 2022
 *
-* My anthem while making this module - 1901 - Phoenix
+* My anthem while making this module - 1901 by Phoenix
 */
 
 #include "plugin.hpp"
