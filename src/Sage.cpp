@@ -129,15 +129,17 @@ void Sage::process(const ProcessArgs &args){
 		oscillator.channels = std::min(activeChannels - chan, 4);
 		float_4 pitch = pitchParam + inputs[VOCT_INPUT].getPolyVoltageSimd<float_4>(chan);
 		float_4 freq;
-		if (FMmode == 0) {
-			freq = dsp::FREQ_C4 * dsp::approxExp2_taylor5(pitch + 30.f) / std::pow(2.f, 30.f);
-			freq += dsp::FREQ_C4 * inputs[FM_INPUT].getPolyVoltageSimd<float_4>(chan) * fmParam;
-		}else{
+		if (FMmode == 0) { //0 is Exp, 1 is linear through-zero
 			pitch += inputs[FM_INPUT].getPolyVoltageSimd<float_4>(chan) * fmParam;
 			freq = dsp::FREQ_C4 * dsp::approxExp2_taylor5(pitch + 30.f) / std::pow(2.f, 30.f);
+			freq = clamp(freq, 0.f, args.sampleRate / 16.f); // nyquist frequency dived by freq of highest harmonic - @48 khz, max should be ~F#7
+		}else{
+			freq = dsp::FREQ_C4 * dsp::approxExp2_taylor5(pitch + 30.f) / std::pow(2.f, 30.f);
+			freq += dsp::FREQ_C4 * inputs[FM_INPUT].getPolyVoltageSimd<float_4>(chan) * fmParam;
+			freq = clamp(freq,  -args.sampleRate / 16.f , args.sampleRate / 16.f);
 		}
 
-		freq = clamp(freq, 0.f, args.sampleRate / 16.f); // nyquist frequency dived by freq of highest harmonic - @48 khz, max should be ~F#7
+		
 		oscillator.freq = freq;
 		oscillator.oddsAmp = oddsAmp;
 		oscillator.evensAmp = evensAmp;
@@ -191,7 +193,7 @@ struct SageWidget : ModuleWidget{
 			}
 		};
 
-		std::string modeNames[2] = {"Linear", "1V/OCT"};
+		std::string modeNames[2] = {"Exponential", "Linear Through-Zero"};
 
 		for (int i = 0; i < 2; i++) {
 			ModeItem* modeItem = createMenuItem<ModeItem>(modeNames[i]);
