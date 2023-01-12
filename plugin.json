@@ -25,7 +25,7 @@
     {
       "slug": "Linden",
       "name": "Linden",
-      "description": "A module containing some unconventional analog and digital logic circuits and gates.",
+      "description": "A module containing some unconventional analog and digital circuits and gates.",
       "tags": [
         "Logic",
         "Random",
