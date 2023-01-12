@@ -1,7 +1,7 @@
 {
   "slug": "Digital-Apothecary",
   "name": "Digital Apothecary",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "license": "GPL-3.0-or-later",
   "brand": "Digital Apothecary",
   "author": "Evan JJ Edwards",
@@ -25,7 +25,7 @@
     {
       "slug": "Linden",
       "name": "Linden",
-      "description": "A module containing some unconventional analog and digital circuits and gates.",
+      "description": "A module containing some unconventional analog and digital circuits.",
       "tags": [
         "Logic",
         "Random",
