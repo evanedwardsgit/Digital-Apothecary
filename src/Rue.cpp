@@ -37,9 +37,9 @@ struct Rue : Module {
 		configParam(CURVE_PARAM, 1.f, 4.f, 1.f, "x To the ", "-th Power");
 		configParam(GAIN_PARAM, 0.0, M_SQRT2, 1.0, "Gain", " dB", -10, 20);
 		configParam(OFFSET_PARAM, -5.f, 5.f, 0.f, "Offset", " Volts");
-		configInput(SIGNAL_INPUT, ""); 
-		configInput(CV_INPUT, "");
-		configOutput(VCA_OUTPUT, "");
+		configInput(SIGNAL_INPUT, "Signal"); 
+		configInput(CV_INPUT, "CV");
+		configOutput(VCA_OUTPUT, "Signal");
 	}
 
 	void process(const ProcessArgs& args) override;

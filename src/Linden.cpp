@@ -7,7 +7,7 @@
 * Bernoulli gate, analog logic, and aesthetic of this module inspired by the Kinka, Links, and Branches modules by Mutable Instruments - since 2022
 * Implementation of the bernoulli gates is utilized from the structure of Audible Instument's code (GPLv3) - since 2022
 *
-* My anthem while making this module - That I Miss You - Vansire
+* My anthem while making this module - 1901 - Phoenix
 */
 
 #include "plugin.hpp"
@@ -43,18 +43,18 @@ struct Linden : Module {
 	
 	Linden() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
-		configInput(ANALOG_A_INPUT, "");
-		configInput(ANALOG_B_INPUT, "");
-		configInput(BERNOULLI_INPUT, "");
-		configInput(PROB_INPUT, "");
-		configInput(A_CNOT_INPUT, "");
-		configInput(B_CNOT_INPUT, "");
-		configOutput(MAX_OUTPUT, "");
-		configOutput(MIN_OUTPUT, "");
-		configOutput(A_BERN_OUTPUT, "");
-		configOutput(B_BERN_OUTPUT, "");
-		configOutput(A_CNOT_OUTPUT, "");
-		configOutput(B_CNOT_OUTPUT, "");
+		configInput(ANALOG_A_INPUT, "Analog A");
+		configInput(ANALOG_B_INPUT, "Analog B");
+		configOutput(MAX_OUTPUT, "Analog Max");
+		configOutput(MIN_OUTPUT, "Analog Min");
+		configInput(BERNOULLI_INPUT, "Bernoulli Gate");
+		configInput(PROB_INPUT, "Bernoulli Probability");
+		configOutput(A_BERN_OUTPUT, "Bernoulli A");
+		configOutput(B_BERN_OUTPUT, "Bernoulli B");
+		configInput(A_CNOT_INPUT, "CNOT A");
+		configInput(B_CNOT_INPUT, "CNOT B");
+		configOutput(A_CNOT_OUTPUT, "CNOT A");
+		configOutput(B_CNOT_OUTPUT, "CNOT B");
 	}
 
 	void process(const ProcessArgs &args) override;

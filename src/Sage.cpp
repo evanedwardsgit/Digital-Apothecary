@@ -5,7 +5,7 @@
 * Contact at eedwards6@wisc.edu with any comments, concerns, or suggestions
 * 
 * Pitch calculations and polyphonic structure utilized from Andrew Belt's code (GPLv3) - since 2022
-*
+* 
 * My anthem while making this module - Be Fine by Madeon
 */
 
@@ -16,46 +16,32 @@ using simd::float_4;
 
 template <typename T>
 struct HarmonicOsc{
-	int channels;
-	float oddsAmp, evensAmp;
-	T freq, phase;
-	T out;
+	int channels = 0;
+	float oddsAmp = 0.f;
+	float evensAmp = 0.f;
+	T freq = 0.f;
+	T phase = 0.f;
+	T out = 0.f;
 
-	public:
-		HarmonicOsc(){
-			reset();
-		}
+	void process(float sampleTime) {
+		phase += freq * sampleTime;
+		phase -= simd::floor(phase);
+		out = summation(phase);
+	}
 
-		void reset(){
-			phase = 0.f;
-			freq = 0.f;
-			out = 0.f;
-			channels = 0;
-			oddsAmp = 0.f;
-			evensAmp = 0.f;
-		}
-
-		void process(float sampleTime) {
-			phase += freq * sampleTime;
-			phase -= simd::floor(phase);
-			out = summation(phase);
-		}
-
-	private:
-		T summation(T phase){
-			T toReturn = simd::sin(2.f * M_PI * phase);
-			
-			for (int i = 2; i <= 8; i++){
-				if (i % 2 == 0){
-					toReturn += evensAmp * simd::sin(2.f * M_PI * phase * i) / i;
-				}
-				else{
-					toReturn += oddsAmp * simd::sin(2.f * M_PI * phase * i) / i;
-				}
+	T summation(T phase){
+		T toReturn = simd::sin(2.f * M_PI * phase);
+		
+		for (int i = 2; i <= 8; i++){
+			if (i % 2 == 0){
+				toReturn += evensAmp * simd::sin(2.f * M_PI * phase * i) / i;
 			}
-
-			return toReturn;
+			else{
+				toReturn += oddsAmp * simd::sin(2.f * M_PI * phase * i) / i;
+			}
 		}
+		return toReturn;
+	}
 };
 
 struct Sage : Module{
@@ -83,6 +69,8 @@ struct Sage : Module{
 	};
 
 	HarmonicOsc<float_4> Oscillators[4];
+	int FMmode = 0;
+
 	Sage(){
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 		configParam(ODDS_PARAM, 0.f, 1.f, 0.f, "Odd Harmonics", " %", 0.f, 100.f);
@@ -91,11 +79,30 @@ struct Sage : Module{
 		configParam(OUT_PARAM, 0.f, 1.f, 0.5, "Output Gain", " %", 0.f, 100.f);
 		configParam(FM_PARAM, -1.f, 1.f, 0.f, "FM Attenuate", " %", 0.f, 100.f);
 		getParamQuantity(FM_PARAM)->randomizeEnabled = false;
-		configInput(FM_INPUT, "FM Modulation");
-		configInput(ODDS_INPUT, "ODDS");
-		configInput(EVENS_INPUT, "EVENS");
+		configInput(FM_INPUT, "FM");
+		configInput(ODDS_INPUT, "Odds");
+		configInput(EVENS_INPUT, "Evens");
 		configInput(VOCT_INPUT, "1V/OCT");
-		configOutput(OUT_OUTPUT, "OUTPUT");
+		configOutput(OUT_OUTPUT, "Oscillator");
+		ResetEvent e;
+		onReset(e);
+	}
+
+	void onReset(const ResetEvent& e) override {
+		Module::onReset(e);
+		FMmode = 0;
+	}
+	
+	json_t* dataToJson() override {
+		json_t* rootJ = json_object();
+		json_object_set_new(rootJ, "FMmode", json_integer(FMmode));
+		return rootJ;
+	}
+
+	void dataFromJson(json_t* rootJ) override {
+		json_t* FMmodeJ = json_object_get(rootJ, "FMmode");
+		if (FMmodeJ)
+			FMmode = json_integer_value(FMmodeJ);
 	}
 
 	void process(const ProcessArgs &args) override;
@@ -107,7 +114,7 @@ void Sage::process(const ProcessArgs &args){
 	float oddsAmp = params[ODDS_PARAM].getValue();
 	float evensAmp = params[EVENS_PARAM].getValue();
 	float fmParam = params[FM_PARAM].getValue();
-	int activeChannels = std::max(1, inputs[VOCT_INPUT].getChannels());\
+	int activeChannels = std::max(1, inputs[VOCT_INPUT].getChannels());
 
 	if(inputs[ODDS_INPUT].isConnected()){
 		oddsAmp = clamp(inputs[ODDS_INPUT].getVoltage() / 15.f + oddsAmp, 0.f, 1.f);
@@ -121,9 +128,16 @@ void Sage::process(const ProcessArgs &args){
 		auto& oscillator = Oscillators[chan / 4];
 		oscillator.channels = std::min(activeChannels - chan, 4);
 		float_4 pitch = pitchParam + inputs[VOCT_INPUT].getPolyVoltageSimd<float_4>(chan);
-		pitch += inputs[FM_INPUT].getPolyVoltageSimd<float_4>(chan) * fmParam;
-		pitch = dsp::FREQ_C4 * dsp::approxExp2_taylor5(pitch + 30.f) / std::pow(2.f, 30.f);
-		float_4 freq = clamp(pitch, 0.f, args.sampleRate / 16.f); // nyquist frequency dived by freq of highest harmonic - @48 khz, max should be ~F#7
+		float_4 freq;
+		if (FMmode == 0) {
+			freq = dsp::FREQ_C4 * dsp::approxExp2_taylor5(pitch + 30.f) / std::pow(2.f, 30.f);
+			freq += dsp::FREQ_C4 * inputs[FM_INPUT].getPolyVoltageSimd<float_4>(chan) * fmParam;
+		}else{
+			pitch += inputs[FM_INPUT].getPolyVoltageSimd<float_4>(chan) * fmParam;
+			freq = dsp::FREQ_C4 * dsp::approxExp2_taylor5(pitch + 30.f) / std::pow(2.f, 30.f);
+		}
+
+		freq = clamp(freq, 0.f, args.sampleRate / 16.f); // nyquist frequency dived by freq of highest harmonic - @48 khz, max should be ~F#7
 		oscillator.freq = freq;
 		oscillator.oddsAmp = oddsAmp;
 		oscillator.evensAmp = evensAmp;
@@ -160,6 +174,32 @@ struct SageWidget : ModuleWidget{
 		addInput(createInputCentered<PJ301MPort>(mm2px(Vec(8.495, 110.783)), module, Sage::VOCT_INPUT));
 
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(21.985, 110.783)), module, Sage::OUT_OUTPUT));
+
+
+	}
+
+	void appendContextMenu(Menu* menu) override {
+		Sage* module = dynamic_cast<Sage*>(this->module);
+
+		menu->addChild(new MenuEntry);
+		menu->addChild(createMenuLabel("FM"));
+		struct ModeItem : MenuItem {
+			Sage* module;
+			int FMmode;
+			void onAction(const event::Action& e) override {
+				module->FMmode = FMmode;
+			}
+		};
+
+		std::string modeNames[2] = {"Linear", "1V/OCT"};
+
+		for (int i = 0; i < 2; i++) {
+			ModeItem* modeItem = createMenuItem<ModeItem>(modeNames[i]);
+			modeItem->rightText = CHECKMARK(module->FMmode == i);
+			modeItem->module = module;
+			modeItem->FMmode = i;
+			menu->addChild(modeItem);
+		}
 	}
 };
 
