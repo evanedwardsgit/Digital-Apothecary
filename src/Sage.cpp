@@ -77,7 +77,7 @@ struct Sage : Module{
 		configParam(EVENS_PARAM, 0.f, 1.f, 0.f, "Even Harmonics", " %", 0.f, 100.f);
 		configParam(TUNE_PARAM, -12.f, 12.f, 0.f, "Frequency", " Hz", dsp::FREQ_SEMITONE, dsp::FREQ_C4);
 		configParam(OUT_PARAM, 0.f, 1.f, 0.5, "Output Gain", " %", 0.f, 100.f);
-		configParam(FM_PARAM, -1.f, 1.f, 0.f, "FM Attenuate", " %", 0.f, 100.f);
+		configParam(FM_PARAM, -1.f, 1.f, 0.f, "FM", " %", 0.f, 100.f);
 		getParamQuantity(FM_PARAM)->randomizeEnabled = false;
 		configInput(FM_INPUT, "FM");
 		configInput(ODDS_INPUT, "Odds");
