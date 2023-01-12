@@ -136,7 +136,7 @@ void Sage::process(const ProcessArgs &args){
 		}else{
 			freq = dsp::FREQ_C4 * dsp::approxExp2_taylor5(pitch + 30.f) / std::pow(2.f, 30.f);
 			freq += dsp::FREQ_C4 * inputs[FM_INPUT].getPolyVoltageSimd<float_4>(chan) * fmParam;
-			freq = clamp(freq,  -args.sampleRate / 16.f , args.sampleRate / 16.f);
+			freq = clamp(freq, -args.sampleRate / 16.f , args.sampleRate / 16.f);
 		}
 
 		
