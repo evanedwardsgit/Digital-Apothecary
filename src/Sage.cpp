@@ -1,5 +1,5 @@
 /*
-* Sage v1.0.0 - Stable Release
+* Sage v1.1.0 - Stable Release
 * A polyphonic, additive harmonic oscillator
 * Copyright 2022, Evan JJ Edwards - GPLv3 or later
 * Contact at eedwards6@wisc.edu with any comments, concerns, or suggestions
