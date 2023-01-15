@@ -24,4 +24,4 @@ A module containing some unconventional analog and digital logic gates. The anal
 
 ![](https://github.com/evanedwardsgit/Digital-Apothecary/blob/main/res/Panels/Rue.svg)
 
-A voltage controlled amplifier that has offset control for control voltage and allows for a variable response curve for CV and gain from linear to exponential. This module supports polyphony.
+A voltage controlled amplifier that has offset control for control voltage and allows for a variable response curve, from linear to exponential, over both CV and gain. This module supports polyphony.
